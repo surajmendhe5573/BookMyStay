@@ -65,4 +65,31 @@ const getAllUsers= async(req, res)=>{
     }
 }
 
-module.exports = {register, login, getAllUsers};
+const updateProfile = async (req, res) => {
+    try {
+        const { userId } = req.params; // Extract the user ID from the route parameters
+        const { name, email, age, gender } = req.body;
+
+        // Find and update the user
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { name, email, age, gender }, // Fields to update
+            { new: true, runValidators: true } // Return the updated document
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({
+            message: "Profile updated successfully",
+            user: updatedUser,
+        });
+    } catch (error) {
+        console.error('Profile Update Error:', error);
+        res.status(500).json({ message: 'Internal server error', error });
+    }
+};
+
+
+module.exports = {register, login, getAllUsers, updateProfile};
