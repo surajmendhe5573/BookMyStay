@@ -17,7 +17,7 @@ const addHotel = async (req, res) => {
 
     // Check if user is admin
     if (req.user.role !== "ADMIN") {
-      return res.status(403).json({ message: "Unauthorized" });
+      return res.status(403).json({ message: "Unauthorized (only admin can add hotel)" });
     }
 
     const newHotel = new Hotel({ name, location, description, rooms });
