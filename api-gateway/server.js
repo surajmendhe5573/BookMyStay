@@ -8,6 +8,7 @@ app.use(express.json());
 
 // API Gateway routes
 app.use('/api/users', require('./routes/user'));
+app.use('/api/hotels', require('./routes/hotel'));
 
 app.listen(port, () => {
     console.log(`API Gateway is running on http://localhost:${port}`);
