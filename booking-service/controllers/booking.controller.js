@@ -3,6 +3,7 @@ const Hotel = require('../../hotel-service/models/hotel.model');
 const User = require('../../user-service/models/user.model');
 const axios= require('axios');
 
+// create a booking
 exports.createBooking = async (req, res) => {
     try {
       const { hotelId, room, checkInDate, checkOutDate } = req.body;
@@ -79,7 +80,7 @@ exports.getUserBookings = async (req, res) => {
     }
   };
 
-  // Get a specific booking by ID
+ // Get a specific booking by ID
 exports.getBookingById = async (req, res) => {
     try {
       const { id } = req.params; 
