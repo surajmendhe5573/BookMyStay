@@ -9,8 +9,8 @@ app.use(express.json());
 
 require('./db/DB');
 
-app.get('/', (req,res)=>{{
-    res.send('Jai Shree Ram');
+app.get('/Ram', (req,res)=>{{
+    res.send('Jai Shree Ram.');
 }});
 
 app.use('/api/users', require('./routes/user'));
