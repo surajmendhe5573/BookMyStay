@@ -55,11 +55,10 @@ exports.createBooking = async (req, res) => {
     }
   };
   
-
 // Get all bookings for a user
 exports.getUserBookings = async (req, res) => {
     try {
-      const userId = req.user.id; // Assuming JWT authentication
+      const userId = req.user.id; 
       const bookings = await Booking.find({ user: userId });
   
       // Manually populate hotel data
@@ -79,3 +78,61 @@ exports.getUserBookings = async (req, res) => {
       return res.status(500).json({ message: 'Internal server error', error });
     }
   };
+
+  // Get a specific booking by ID
+exports.getBookingById = async (req, res) => {
+    try {
+      const { id } = req.params; 
+      const userId = req.user.id; 
+  
+      // Find the booking by its ID and ensure the booking belongs to the authenticated user
+      const booking = await Booking.findOne({ _id: id, user: userId });
+    
+      if (!booking) {
+        return res.status(404).json({ message: 'Booking not found' });
+      }
+    
+      // Manually populate hotel data
+      const hotelDetails = await axios.get(`http://localhost:5001/api/hotels/${booking.hotel}`);
+    
+      return res.status(200).json({
+        message: 'Booking details retrieved successfully',
+        data: { ...booking.toObject(), hotel: hotelDetails.data },
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error', error });
+    }
+  };
+  
+// Cancel a booking
+exports.cancelBooking = async (req, res) => {
+    try {
+      const { id } = req.params; 
+      const userId = req.user.id; // Get the authenticated user ID
+    
+      const booking = await Booking.findOne({ _id: id, user: userId });
+      
+      if (!booking) {
+        return res.status(404).json({ message: 'Booking not found' });
+      }
+      
+      // Check if the booking is already cancelled
+      if (booking.status === 'cancelled') {
+        return res.status(400).json({ message: 'Booking is already cancelled' });
+      }
+  
+      // Update the booking status to 'cancelled'
+      booking.status = 'cancelled';
+      await booking.save();
+    
+      return res.status(200).json({
+        message: 'Booking cancelled successfully',
+        data: booking,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error', error });
+    }
+  };
+  
