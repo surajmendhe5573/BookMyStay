@@ -5,6 +5,7 @@ const router = express.Router();
 const HOTEL_SERVICE_BASE_URL = process.env.HOTEL_SERVICE_BASE_URL || 'http://localhost:4000/api/hotels';
 
 // Forward request to hotel-service
+// get all hotels
 router.get('/', async (req, res) => {
     try {
         const response = await axios.get(`${HOTEL_SERVICE_BASE_URL}`);
@@ -14,6 +15,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+// add a new hotel (admin only)
 router.post('/', async (req, res) => {
     try {
         const response = await axios.post(`${HOTEL_SERVICE_BASE_URL}`, req.body, {
@@ -27,6 +29,7 @@ router.post('/', async (req, res) => {
     }
 });
 
+// get specific hotel details by id
 router.get('/:id', async (req, res) => {
     try {
         const response = await axios.get(`${HOTEL_SERVICE_BASE_URL}/${req.params.id}`);
@@ -36,6 +39,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// update hotel details (admin only)
 router.put('/:id', async (req, res) => {
     try {
         const response = await axios.put(`${HOTEL_SERVICE_BASE_URL}/${req.params.id}`, req.body, {
@@ -49,6 +53,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+// Retrieve room availability for a specific hotel
 router.get('/:id/rooms', async (req, res) => {
     try {
         const response = await axios.get(`${HOTEL_SERVICE_BASE_URL}/${req.params.id}/rooms`);

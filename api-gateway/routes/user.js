@@ -24,6 +24,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// get all users
 router.get('/', async (req, res) => {
     try {
         const response = await axios.get(`${USER_SERVICE_BASE_URL}`);
@@ -33,6 +34,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+// update user
 router.put('/update/:userId', async (req, res) => {
     try {
         const response = await axios.put(`${USER_SERVICE_BASE_URL}/update/${req.params.userId}`, req.body);
