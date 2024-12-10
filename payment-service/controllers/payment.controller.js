@@ -61,7 +61,7 @@ exports.initiatePayment = async (req, res) => {
       bookingId,
       amount,
       paymentId: response.result.id,
-      status: 'PENDING',
+      status: 'COMPLETED',
     });
 
     await payment.save();
@@ -91,3 +91,22 @@ exports.initiatePayment = async (req, res) => {
     res.status(500).json({ message: 'Error initiating payment.', error: error.message });
   }
 };
+
+// paymentController.js
+
+exports.getPaymentHistory = async (req, res) => {
+  try {
+    // Retrieve payments from the database for the logged-in user
+    const payments = await Payment.find({ userId: req.user.id }).sort({ createdAt: -1 }); // Sort by most recent payments
+
+    if (payments.length === 0) {
+      return res.status(404).json({ message: 'No payments found for this user.' });
+    }
+
+    res.status(200).json({ payments });
+  } catch (error) {
+    console.error("Error retrieving payment history:", error);
+    res.status(500).json({ message: 'Error retrieving payment history.', error: error.message });
+  }
+};
+
