@@ -18,3 +18,4 @@ app.use('/api/hotels', require('./routes/hotel'));
 app.listen(port, ()=>{
     console.log(`server is running on http://localhost:${port}`); 
 })
+
