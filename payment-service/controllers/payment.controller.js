@@ -92,8 +92,7 @@ exports.initiatePayment = async (req, res) => {
   }
 };
 
-// paymentController.js
-
+// Retrieve Payement History
 exports.getPaymentHistory = async (req, res) => {
   try {
     // Retrieve payments from the database for the logged-in user
