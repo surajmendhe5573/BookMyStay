@@ -109,3 +109,24 @@ exports.getPaymentHistory = async (req, res) => {
   }
 };
 
+// Retrieving specific payment details by Id.
+exports.getPaymentById = async (req, res) => {
+  try {
+    const { id } = req.params; // Extract payment ID from the URL parameters
+
+    // Find the payment by its ID and make sure it belongs to the logged-in user
+    const payment = await Payment.findOne({ 
+      _id: id, 
+      userId: req.user.id 
+    });
+
+    if (!payment) {
+      return res.status(404).json({ message: 'Payment not found or you do not have access to this payment.' });
+    }
+
+    res.status(200).json({ payment });
+  } catch (error) {
+    console.error("Error retrieving payment details:", error);
+    res.status(500).json({ message: 'Error retrieving payment details.', error: error.message });
+  }
+};
