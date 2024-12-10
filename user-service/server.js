@@ -18,3 +18,4 @@ app.use('/api/users', require('./routes/user'));
 app.listen(port, ()=>{
     console.log(`server is running on http://localhost:${port}`); 
 })
+
