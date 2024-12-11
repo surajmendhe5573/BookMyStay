@@ -19,8 +19,19 @@ const addReview = async (req, res) => {
 // Retrieve Reviews for a Hotel
 const getReviews = async (req, res) => {
     const { hotelId } = req.query;
+  
+    // Check if hotelId exists in the query
+    if (!hotelId) {
+      return res.status(400).json({ message: 'Hotel ID is required' });
+    }
+  
     try {
       const reviews = await Review.find({ hotelId });
+
+      if (reviews.length === 0) {
+        return res.status(404).json({ message: 'No reviews found for this hotel' });
+      }
+  
       res.status(200).json({ reviews });
     } catch (error) {
       console.error(error);
