@@ -17,19 +17,6 @@ router.post('/send', async (req, res) => {
     }
 });
 
-// router.post('/send', async (req, res) => {
-//     try {
-//         console.log('Forwarding request to Notification Service:', req.body);
-//         const response = await axios.post(`${NOTIFICATION_SERVICE_BASE_URL}/send`, req.body, {
-//             headers: req.headers
-//         });
-//         res.status(response.status).json(response.data);
-//     } catch (error) {
-//         console.error('Error in Notification Service:', error.response?.data || error.message);
-//         res.status(error.response?.status || 500).json({ error: error.response?.data || 'Internal Server Error' });
-//     }
-// });
-
 
 // Get all notifications
 router.get('/', async (req, res) => {
