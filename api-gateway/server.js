@@ -14,6 +14,7 @@ app.use('/api/hotels', require('./routes/hotel'));
 app.use('/api/bookings', require('./routes/booking'));
 app.use('/api/payments', require('./routes/payment'));
 app.use('/api/notifications', require('./routes/notification'));
+app.use('/api/reviews', require('./routes/review'));
 
 app.listen(port, () => {
     console.log(`API Gateway is running on http://localhost:${port}`);
