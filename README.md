@@ -89,12 +89,61 @@ Allows users to leave reviews and ratings for hotels.
 
 ### Prerequisites
 - Node.js and npm installed
-- Docker and Kubernetes configured
 - MongoDB and Redis instances running
 
-### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/surajmendhe5573/BookMyStay.git
-   cd hotel-booking-system
+## Installation and Setup
+- Clone the repository
+```
+git clone git clone https://github.com/surajmendhe5573/BookMyStay.git
+
+```
+- Install dependencies
+```
+cd <bookmystay>
+npm install
+```
+- Build and run the project
+```
+npm start
+```
+
+## Environment Variables
+
+Create a `.env` file in the root directory of the project with the following variables:
+
+```
+# Base URLs for Microservices 
+USER_SERVICE_BASE_URL=http://localhost:5000/api/users
+HOTEL_SERVICE_BASE_URL=http://localhost:5001/api/hotels
+BOOKING_SERVICE_BASE_URL=http://localhost:5002/api/bookings
+PAYMENT_SERVICE_BASE_URL=http://localhost:5003/api/payments
+NOTIFICATION_SERVICE_BASE_URL=http://localhost:5004/api/notifications
+REVIEW_SERVICE_BASE_URL=http://localhost:5005/api/reviews
+
+# Application Port
+PORT=3000
+
+# JWT Secret Key
+JWT_SECRET=<your-jwt-secret>
+
+# PayPal Configuration
+PAYPAL_CLIENT_ID=<your-paypal-client-id>
+PAYPAL_CLIENT_SECRET=<your-paypal-client-secret>
+PAYPAL_MODE=sandbox
+
+# SMTP Configuration
+SMTP_EMAIL=<your-email>
+SMTP_PASSWORD=<your-email-password>
+
+
+```
+
+## 🚀 About Me
+I'm a Backend developer...
+
+
+## 🔗 Links
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://github.com/surajmendhe5573)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/suraj-mendhe-569879233/?original_referer=https%3A%2F%2Fsearch%2Eyahoo%2Ecom%2F&originalSubdomain=in)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/)
