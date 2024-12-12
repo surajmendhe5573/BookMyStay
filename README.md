@@ -96,5 +96,5 @@ Allows users to leave reviews and ratings for hotels.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/hotel-booking-system.git
+   git clone https://github.com/surajmendhe5573/BookMyStay.git
    cd hotel-booking-system
