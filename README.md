@@ -2,90 +2,71 @@
 
 ## Overview
 
-The **Hotel Booking System** is a distributed application implemented using a microservices architecture. Each service handles a specific domain, ensuring scalability, maintainability, and high availability. Services communicate with each other through REST APIs and RabbitMQ for asynchronous messaging.
+The **Hotel Booking System** is a distributed application implemented using a microservices architecture. Each service handles a specific domain, ensuring scalability, maintainability, and high availability. Services communicate with each other through REST APIs.
 
 ## Features and Microservices
 
 ### 1. **User Service**
 Handles user registration, authentication, and profile management.
 
-**Responsibilities:**
-- User registration and login (JWT-based authentication).
-- Profile management.
-
 **Endpoints:**
 - `POST /register` - Register a new user.
 - `POST /login` - Log in a user.
-- `GET /profile` - Retrieve user profile.
-- `PUT /profile` - Update user profile.
+- `GET /users` - Retrieve user profile.
+- `PUT /update-user` - Update user profile.
 
 ---
 
 ### 2. **Hotel Service**
 Manages hotel information, room details, and availability.
 
-**Responsibilities:**
-- CRUD operations for hotels and rooms.
-- Retrieve room availability.
-
 **Endpoints:**
-- `GET /hotels` - Retrieve all hotels.
-- `POST /hotels` - Add a new hotel (Admin only).
-- `GET /hotels/:id` - Get hotel details.
-- `PUT /hotels/:id` - Update hotel details (Admin only).
-- `GET /hotels/:id/rooms` - Retrieve room availability.
+- `POST /add-hotels` - Add a new hotel (Admin only).
+- `GET /retrieve-all-hotels` - Retrieve all hotels.
+- `GET /get-hotel-details/:id` - Get specific hotel details by ID.
+- `PUT /update-hotel/:id` - Update hotel details (Admin only).
+- `GET /room-availability/:id` - Retrieve room availability for a hotel.
 
 ---
 
 ### 3. **Booking Service**
 Handles room bookings and reservations.
 
-**Responsibilities:**
-- Manage bookings.
-- Support cancellation of bookings.
-
 **Endpoints:**
-- `POST /bookings` - Create a booking.
-- `GET /bookings` - Retrieve user bookings.
-- `GET /bookings/:id` - Retrieve booking details.
-- `PUT /bookings/:id/cancel` - Cancel a booking.
+- `POST /create-booking` - Create a booking.
+- `GET /retrieve-user-bookings` - Retrieve user bookings.
+- `GET /retrieve-booking-details/:id` - Retrieve booking details.
+- `PUT /cancel-booking/:id` - Cancel a booking.
 
 ---
 
 ### 4. **Payment Service**
-Manages payment processing and transaction history.
-
-**Responsibilities:**
-- Process payments.
-- Retrieve payment history.
+Processes payments and manages transaction history.
 
 **Endpoints:**
-- `POST /payments` - Initiate a payment.
-- `GET /payments` - Retrieve payment history.
-- `GET /payments/:id` - Get payment details.
+- `POST /initiate-payment` - Initiate a payment.
+- `GET /retrieve-payment-history` - Retrieve payment history.
+- `GET /retrieve-payment/:id` - Retrieve specific payment details.
 
 ---
 
 ### 5. **Notification Service**
-Handles notifications for booking confirmations, reminders, and updates.
+Sends booking confirmations, reminders, and updates via email or SMS.
 
-**Responsibilities:**
-- Send notifications via email/SMS.
-- Triggered by events using RabbitMQ.
+**Endpoints:**
+- `POST /send-notifications` - Send notifications.
+- `GET /retrieve-notifications` - Retrieve notification details.
 
 ---
 
 ### 6. **Review Service**
 Allows users to leave reviews and ratings for hotels.
 
-**Responsibilities:**
-- Add, update, retrieve, and delete reviews.
-
 **Endpoints:**
-- `POST /reviews` - Add a review.
-- `GET /reviews` - Retrieve reviews for a hotel.
-- `PUT /reviews/:id` - Update a review.
-- `DELETE /reviews/:id` - Delete a review.
+- `POST /add-review` - Add a review.
+- `PUT /update-review/:id` - Update a review.
+- `DELETE /delete-review/:id` - Delete a review.
+- `GET /reviews/:hotelId` - Retrieve reviews by hotel ID.
 
 ---
 
@@ -93,9 +74,6 @@ Allows users to leave reviews and ratings for hotels.
 
 - **Backend:** Node.js, Express.js
 - **Databases:** MongoDB, Redis (for caching)
-- **Messaging Queue:** RabbitMQ
-- **Containerization:** Docker
-- **Orchestration:** Kubernetes
 - **Authentication:** JSON Web Tokens (JWT)
 - **API Gateway:** Routing and securing microservices
 
@@ -104,25 +82,19 @@ Allows users to leave reviews and ratings for hotels.
 ## Architecture Overview
 
 1. **API Gateway**: Central entry point for all incoming requests, routing them to the appropriate microservices.
-2. **Service Communication**: RabbitMQ handles events like bookings and payments asynchronously.
-3. **Database Management**: Each microservice uses its own MongoDB instance for decoupling data.
-4. **Cache Layer**: Redis is used for caching frequently accessed data such as room availability.
-
+2. **Database Management**: Each microservice uses its own MongoDB instance for decoupling data.
 ---
 
-## Implementation Steps
+## Getting Started
 
-### Step 1: Project Structure
-- Create a separate folder for each microservice.
-- Initialize Node.js and Express.js for each service.
+### Prerequisites
+- Node.js and npm installed
+- Docker and Kubernetes configured
+- MongoDB and Redis instances running
 
-### Step 2: API Design
-- Define REST endpoints for each service.
-- Document APIs using Swagger or Postman.
+### Installation
 
-### Step 3: Database Configuration
-- Use MongoDB for persistent storage.
-- Redis for caching data.
-
-### Step 4: Implement Core Features
--
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/hotel-booking-system.git
+   cd hotel-booking-system
