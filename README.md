@@ -1,4 +1,4 @@
-# Hotel Booking System - Microservices Architecture
+# BookMyStay - Microservices Architecture
 
 ## Overview
 
