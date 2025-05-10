@@ -84,4 +84,26 @@ const getHotelRooms = async (req, res) => {
   }
 };
 
-module.exports = { getAllHotels, addHotel, getHotelById, updateHotelById, getHotelRooms };
+const deleteHotelById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Check if user is admin
+    if (req.user.role !== "ADMIN") {
+      return res.status(403).json({ message: "Unauthorized (only admin can delete hotel)" });
+    }
+
+    const deletedHotel = await Hotel.findByIdAndDelete(id);
+
+    if (!deletedHotel) {
+      return res.status(404).json({ message: "Hotel not found" });
+    }
+
+    res.status(200).json({ message: "Hotel deleted successfully", hotel: deletedHotel });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting hotel", error });
+  }
+};
+
+
+module.exports = { getAllHotels, addHotel, getHotelById, updateHotelById, getHotelRooms, deleteHotelById };

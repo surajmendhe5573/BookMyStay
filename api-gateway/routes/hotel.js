@@ -63,4 +63,19 @@ router.get('/:id/rooms', async (req, res) => {
     }
 });
 
+// delete a hotel (admin only)
+router.delete('/:id', async (req, res) => {
+    try {
+        const response = await axios.delete(`${HOTEL_SERVICE_BASE_URL}/${req.params.id}`, {
+            headers: {
+                Authorization: req.headers.authorization
+            }
+        });
+        res.status(response.status).json(response.data);
+    } catch (error) {
+        res.status(error.response?.status || 500).json({ error: error.response?.data || 'Internal Server Error' });
+    }
+});
+
+
 module.exports = router;
