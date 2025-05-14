@@ -2,6 +2,19 @@ const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
+const redis= require('redis');
+
+const client= redis.createClient();
+
+client.on('connect', ()=>{
+    console.log(`Redis is connected`);
+});
+
+client.on('err', (err)=>{
+    console.log(err);
+});
+
+client.connect();
 
 const register = async (req, res) => {
     try {
@@ -57,11 +70,22 @@ const login= async(req, res)=>{
 
 const getAllUsers= async(req, res)=>{
     try {
-        const users= await User.find({}, '-password');  // Exclude the password field
+
+        const cacheKey= 'users';
+
+        const cachedData= await client.get(cacheKey);
+        if(cachedData){
+            return res.status(200).json({message: 'Users fetched successfully (cached)', users:JSON.parse(cachedData)});
+        }
+
+        const users= await User.find({}, '-password');  
+
+        await client.set(cacheKey, JSON.stringify(users), { EX: 3600 })
         res.status(200).json({message: "Users retrieved successfully", users});
         
     } catch (error) {
-        res.status(5000).json({message:"Internal server error"});
+        console.log(error);
+        res.status(500).json({message:"Internal server error"});
     }
 }
 
